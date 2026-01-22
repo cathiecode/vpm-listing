@@ -9,4 +9,5 @@ if (import.meta.main) {
   Deno.copyFile("website/index.html", "out/index.html");
   Deno.copyFile("website/index.js", "out/index.js");
   Deno.copyFile("website/index.css", "out/index.css");
+  Deno.copyFile("website/icon.png", "out/icon.png");
 }
