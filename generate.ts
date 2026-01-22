@@ -2,7 +2,7 @@ import { generateVpmListing } from "./generate-vpm.ts";
 
 if (import.meta.main) {
   const rootDir = Deno.cwd();
-  const hostBaseUrl = "https://vpm-listings.superneko.net";
+  const hostBaseUrl = "https://vpm-listing.superneko.net";
 
   await generateVpmListing(rootDir, hostBaseUrl);
 
