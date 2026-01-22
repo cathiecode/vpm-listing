@@ -124,6 +124,10 @@ async function generatePackagesList(
 
   for await (const dirEntry of Deno.readDir(packagesDir)) {
     if (!dirEntry.isDirectory) {
+      if (dirEntry.name === ".gitkeep") {
+        continue;
+      }
+
       throw new Error(
         `Unexpected file found in packages directory: ${dirEntry.name}`,
       );
