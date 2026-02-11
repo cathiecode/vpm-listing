@@ -2,10 +2,16 @@ import { zip } from "jsr:@deno-library/compress@0.5.6";
 import { compare, parse } from "jsr:@std/semver@1";
 import { z } from "npm:zod@4.3.5";
 
+// Borrowed from https://semver.org/lang/
+// NOTE: Either @std/semver or zod@4 does not have perfect semver regex validation, so we define our own here for stricter checking.
+const SEMVER_REGEX = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
+
 const PackageVersionEntrySchema = z.looseObject({
   // UPM Required
   name: z.string(),
-  version: z.string(),
+  version: z.string().refine((val) => SEMVER_REGEX.test(val), {
+    message: "Invalid semver version",
+  }),
   // UPM Recommended
   description: z.string().optional(),
   unity: z.string().optional(),
